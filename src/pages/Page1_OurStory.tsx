@@ -10,36 +10,42 @@ const MILESTONE_PHOTOS = [
     vitals: 'PULSE: 125 BPM • ATAPI ADRENALINE & LOVE',
     note: 'Woh rollercoasters aur rides pe tera haath pakad ke hasna... kabhi nahi bhool sakta!',
     label: '19 MARCH • ATAPI',
+    position: 'center 25%',
   },
   {
     src: '/assets/first_convo.jpeg',
     vitals: 'DIAGNOSIS: DARE CONVERTED INTO DESTINY',
     note: 'Kisne socha tha ek innocent si dare call se hum dono ki poori duniya badal jayegi.',
     label: '12 FEB • THE DARE',
+    position: 'center 15%',
   },
   {
     src: '/assets/when_i_knew.jpeg',
     vitals: 'HEART RATE: 140 BPM • THE VERY FIRST SPARK',
     note: '18 July ka woh pehla pal jab laga ki yeh connection rab ne banaya hai.',
     label: '18 JULY • FIRST MOMENT',
+    position: 'center 25%',
   },
   {
     src: '/assets/first_date.jpeg',
     vitals: 'STATUS: INNER CHILD UNLOCKED IN PARK',
     note: 'May ki woh shaam... park mein bacho ki tarah khelna aur bas khul ke jeena!',
     label: 'MAY • PARK DATE',
+    position: 'center 8%', // Perfectly shows her face on the bunny ride
   },
   {
     src: '/assets/she_said_yes.jpeg',
     vitals: 'CARDIAC OUTPUT: 100% RESERVED FOR MOTU',
     note: '18 July ki woh ghanton chalti lambi baatein jo dil ke sabse kareeb hain.',
     label: '18 JULY • LONG CONVO',
+    position: 'center 25%',
   },
   {
     src: '/assets/black-traditional.jpg',
     vitals: 'CHRONIC CONDITION: DIWALI NOOR OVERLOAD',
     note: '1 Nov ki Diwali party! Diye toh bohot the, par tu sabse zyada roshan thi.',
     label: '1 NOV • DIWALI PARTY',
+    position: 'center 12%', // Perfectly shows her radiant face and smile in black dress
   },
 ];
 
@@ -367,6 +373,7 @@ export default function Page1_OurStory() {
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
+                          objectPosition: (photo as any).position || 'center 20%',
                           filter: isHovered ? 'contrast(1.05) brightness(1.02)' : 'sepia(0.08) contrast(1.02)',
                           transition: 'transform 0.4s ease, filter 0.4s ease',
                           transform: isHovered ? 'scale(1.06)' : 'scale(1)',
@@ -618,18 +625,24 @@ export default function Page1_OurStory() {
               <div
                 style={{
                   width: '100%',
-                  height: 240,
-                  borderRadius: 4,
+                  height: 'clamp(260px, 36vh, 320px)',
+                  borderRadius: 6,
                   overflow: 'hidden',
                   marginBottom: 16,
-                  boxShadow: '0 8px 20px rgba(0,0,0,0.2)',
-                  border: '1px solid rgba(61,12,2,0.1)',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                  border: '1px solid rgba(61,12,2,0.15)',
+                  backgroundColor: '#0D0205',
                 }}
               >
                 <img
                   src={MILESTONE_PHOTOS[selected % MILESTONE_PHOTOS.length].src}
                   alt={RELATIONSHIP_MILESTONES[selected].title}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: (MILESTONE_PHOTOS[selected % MILESTONE_PHOTOS.length] as any).position || 'center 20%',
+                  }}
                 />
               </div>
 

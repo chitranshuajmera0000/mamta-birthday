@@ -155,35 +155,41 @@ export const PHOTOS = [
     caption: 'The birthday girl 🎂',
     date: '24 January',
     description: 'Hamari 21-saal ki doctor sahiba aur woh smile jo mera pura jahaan roshan karti hai.',
+    position: 'center 25%',
   },
   {
     src: '/assets/panda-headband.jpg',
     caption: 'My Favourite Human 🐼',
     date: 'Memories',
     description: 'Panda headband mein mera sabse pyara, sweet aur soft Bhalu.',
+    position: 'center 22%',
   },
   {
     src: '/assets/white-lehenga-twirl.jpg',
     caption: 'The twirl under lights 💃',
     date: 'Memories',
     description: 'Streetlights ke neeche tera woh twirl jo mere dil mein hamesha ke liye bas gaya.',
+    position: 'center 35%',
   },
   {
     src: '/assets/maroon-sharara.jpg',
     caption: 'Commanding Every Room 🌹',
     date: 'Memories',
     description: 'Looking like royalty against every backdrop — effortlessly stunning.',
+    position: 'center 28%',
   },
   {
     src: '/assets/maroon-closeup.jpg',
     caption: 'That beautiful face 💕',
     date: 'Forever',
     description: 'In pyari aankhon mein dekh kar lagta hai meri poori duniya yahin hai.',
+    position: 'center 10%', // Ensures eyes and radiant smile are fully visible
   },
   {
     src: '/assets/rooftop-sunset.jpg',
     caption: 'Golden hour memories 🌅',
     date: 'Sunset',
     description: 'Ek shaam tere saath, aur zindagi bhar ka sukoon.',
+    position: 'center 20%',
   },
 ];

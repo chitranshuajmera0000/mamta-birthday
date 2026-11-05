@@ -352,6 +352,7 @@ export default function Page3_Memories() {
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
+                objectPosition: (currentPhoto as any).position || 'center 20%',
                 display: 'block',
               }}
             />
@@ -795,7 +796,12 @@ export default function Page3_Memories() {
                 <img
                   src={photo.src}
                   alt={photo.caption}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: (photo as any).position || 'center 20%',
+                  }}
                 />
 
                 {/* Selected Indicator Badge */}

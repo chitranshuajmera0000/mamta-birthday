@@ -1,37 +1,60 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { YEAR_MESSAGES } from '../utils/constants';
-import { Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Sparkles, ChevronLeft, ChevronRight, Heart, Award } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function Page4_Countdown21() {
-  const [currentYear, setCurrentYear] = useState<number>(21);
-  const [viewedYears, setViewedYears] = useState<Set<number>>(new Set([21]));
+  const [currentYear, setCurrentYear] = useState<number>(1);
+  const [viewedYears, setViewedYears] = useState<Set<number>>(new Set([1]));
+  const ribbonRef = useRef<HTMLDivElement>(null);
+
+  const fireMilestoneConfetti = () => {
+    confetti({
+      particleCount: 120,
+      spread: 90,
+      origin: { y: 0.6 },
+      colors: ['#D4AF37', '#C41E3A', '#B76E79', '#FFD700', '#FFFFFF'],
+    });
+  };
 
   const selectYear = (yr: number) => {
     setCurrentYear(yr);
-    const updated = new Set(viewedYears);
-    updated.add(yr);
-    setViewedYears(updated);
+    setViewedYears((prev) => {
+      const updated = new Set(prev);
+      updated.add(yr);
+      return updated;
+    });
 
-    if (yr === 21 && updated.size >= 15) {
-      confetti({
-        particleCount: 100,
-        spread: 80,
-        colors: ['#D4AF37', '#C41E3A', '#B76E79'],
-      });
+    if (yr === 21) {
+      fireMilestoneConfetti();
     }
   };
 
   const nextYear = () => {
-    const next = currentYear < 21 ? currentYear + 1 : 1;
-    selectYear(next);
+    if (currentYear < 21) {
+      selectYear(currentYear + 1);
+    } else {
+      selectYear(1);
+    }
   };
 
   const prevYear = () => {
-    const prev = currentYear > 1 ? currentYear - 1 : 21;
-    selectYear(prev);
+    if (currentYear > 1) {
+      selectYear(currentYear - 1);
+    } else {
+      selectYear(21);
+    }
   };
+
+  // Scroll active year button into view within the horizontal ribbon
+  useEffect(() => {
+    if (!ribbonRef.current) return;
+    const activeBtn = ribbonRef.current.querySelector<HTMLButtonElement>(`[data-year="${currentYear}"]`);
+    if (activeBtn) {
+      activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }, [currentYear]);
 
   return (
     <div
@@ -48,8 +71,8 @@ export default function Page4_Countdown21() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: 'clamp(18px, 3.2vh, 32px) 14px clamp(50px, 8vh, 80px)',
-        gap: 'clamp(12px, 2vh, 22px)',
+        padding: 'clamp(18px, 3.2vh, 32px) 14px clamp(60px, 9vh, 90px)',
+        gap: 'clamp(12px, 2vh, 20px)',
         scrollbarWidth: 'none',
       }}
     >
@@ -84,7 +107,7 @@ export default function Page4_Countdown21() {
             margin: '0 0 2px',
           }}
         >
-          Chapter Four • 21 Glorious Years
+          Chapter Four • 21 Years In The Making
         </p>
         <h1
           style={{
@@ -95,7 +118,7 @@ export default function Page4_Countdown21() {
             margin: '0 0 2px',
           }}
         >
-          The 21 Countdown
+          The 21-Year Journey
         </h1>
         <p
           style={{
@@ -106,42 +129,42 @@ export default function Page4_Countdown21() {
             margin: 0,
           }}
         >
-          "Twenty-one trips around the sun. Every one more beautiful than the last."
+          "From Year 1 to 21 • Every chapter that brought my sweet Motu into the world."
         </p>
       </div>
 
-      {/* Central Interactive Rings Visualizer - Proportionate */}
+      {/* Central Interactive Rings Visualizer */}
       <div
         style={{
           position: 'relative',
-          width: 230,
-          height: 230,
+          width: 210,
+          height: 210,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 8,
-          margin: '8px 0',
+          margin: '4px 0',
         }}
       >
-        {/* Concentric / orbital glowing rings */}
+        {/* Concentric orbital glowing rings */}
         {[1, 2, 3, 4].map((ring) => (
           <motion.div
             key={ring}
             animate={{
               rotate: ring % 2 === 0 ? 360 : -360,
-              scale: currentYear === 21 ? [1, 1.04, 1] : 1,
+              scale: currentYear === 21 ? [1, 1.05, 1] : 1,
             }}
             transition={{
               rotate: { duration: 20 + ring * 8, repeat: Infinity, ease: 'linear' },
-              scale: { duration: 3, repeat: Infinity },
+              scale: { duration: 2.5, repeat: Infinity },
             }}
             style={{
               position: 'absolute',
-              width: ring * 50 + 30,
-              height: ring * 50 + 30,
+              width: ring * 45 + 30,
+              height: ring * 45 + 30,
               borderRadius: '50%',
               border: `1px ${ring === 4 ? 'solid' : 'dashed'} rgba(212, 175, 55, ${0.15 + ring * 0.05})`,
-              boxShadow: currentYear === 21 ? '0 0 20px rgba(212,175,55,0.15)' : 'none',
+              boxShadow: currentYear === 21 ? '0 0 24px rgba(212,175,55,0.25)' : 'none',
               pointerEvents: 'none',
             }}
           />
@@ -150,16 +173,22 @@ export default function Page4_Countdown21() {
         {/* Central Year Focus Orb */}
         <motion.div
           key={currentYear}
-          initial={{ scale: 0.85, opacity: 0 }}
+          initial={{ scale: 0.82, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: 'spring', damping: 15 }}
+          transition={{ type: 'spring', damping: 16 }}
           style={{
-            width: 130,
-            height: 130,
+            width: 124,
+            height: 124,
             borderRadius: '50%',
-            background: 'radial-gradient(circle at 35% 35%, #8B0000 0%, #3D0C02 60%, #1A0505 100%)',
-            boxShadow: '0 0 40px rgba(196,30,58,0.5), inset 0 0 20px rgba(212,175,55,0.3)',
-            border: '2px solid rgba(212,175,55,0.7)',
+            background:
+              currentYear === 21
+                ? 'radial-gradient(circle at 35% 35%, #C41E3A 0%, #8B0000 60%, #3D0C02 100%)'
+                : 'radial-gradient(circle at 35% 35%, #8B0000 0%, #3D0C02 60%, #1A0505 100%)',
+            boxShadow:
+              currentYear === 21
+                ? '0 0 45px rgba(212,175,55,0.65), inset 0 0 20px rgba(255,215,0,0.4)'
+                : '0 0 35px rgba(196,30,58,0.45), inset 0 0 16px rgba(212,175,55,0.25)',
+            border: currentYear === 21 ? '2.5px solid #FFD700' : '2px solid rgba(212,175,55,0.7)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -172,7 +201,7 @@ export default function Page4_Countdown21() {
           <span
             style={{
               fontFamily: '"Cormorant Garamond", serif',
-              fontSize: 10.5,
+              fontSize: 10,
               letterSpacing: 3,
               color: '#D4AF37',
               textTransform: 'uppercase',
@@ -183,10 +212,10 @@ export default function Page4_Countdown21() {
           <span
             style={{
               fontFamily: '"Great Vibes", cursive',
-              fontSize: 50,
+              fontSize: 48,
               color: '#FFF',
               lineHeight: 1,
-              margin: '2px 0',
+              margin: '1px 0',
               textShadow: '0 0 18px rgba(212,175,55,0.6)',
             }}
           >
@@ -195,18 +224,19 @@ export default function Page4_Countdown21() {
           <span
             style={{
               fontFamily: '"Lato", sans-serif',
-              fontSize: 9,
-              color: '#F4C2C2',
+              fontSize: 8.5,
+              color: currentYear === 21 ? '#FFD700' : '#F4C2C2',
               letterSpacing: 1.5,
               textTransform: 'uppercase',
+              fontWeight: currentYear === 21 ? 700 : 400,
             }}
           >
-            {currentYear === 21 ? 'THE MILESTONE' : 'OF HER LIFE'}
+            {currentYear === 21 ? '★ THE GRAND 21 ★' : 'OF HER LIFE'}
           </span>
         </motion.div>
       </div>
 
-      {/* Year Message Card - Proportionate */}
+      {/* Year Message Card */}
       <AnimatePresence mode="wait">
         <motion.div
           key={`msg-${currentYear}`}
@@ -216,48 +246,138 @@ export default function Page4_Countdown21() {
           transition={{ duration: 0.3 }}
           style={{
             background: 'rgba(26,5,5,0.85)',
-            border: '1px solid rgba(212,175,55,0.35)',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(139,0,0,0.25)',
-            borderRadius: 10,
-            padding: '12px 22px',
+            border: currentYear === 21 ? '1.5px solid rgba(212,175,55,0.7)' : '1px solid rgba(212,175,55,0.35)',
+            boxShadow:
+              currentYear === 21
+                ? '0 12px 35px rgba(0,0,0,0.85), 0 0 25px rgba(212,175,55,0.35)'
+                : '0 10px 30px rgba(0,0,0,0.8), 0 0 20px rgba(139,0,0,0.25)',
+            borderRadius: 12,
+            padding: '14px 22px',
             maxWidth: 480,
             width: '90%',
             textAlign: 'center',
             zIndex: 10,
             backdropFilter: 'blur(10px)',
-            margin: '4px 0',
+            margin: '2px 0',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: 4 }}>
-            <Sparkles size={14} color="#D4AF37" />
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: 6 }}>
+            {currentYear === 21 ? (
+              <Award size={15} color="#FFD700" />
+            ) : (
+              <Sparkles size={14} color="#D4AF37" />
+            )}
             <span
               style={{
                 fontFamily: '"Cormorant Garamond", serif',
-                fontSize: 11,
+                fontSize: 11.5,
                 letterSpacing: 3,
-                color: '#D4AF37',
+                color: currentYear === 21 ? '#FFD700' : '#D4AF37',
                 textTransform: 'uppercase',
+                fontWeight: 700,
               }}
             >
-              Reflection on Year {currentYear}
+              {currentYear === 21 ? 'THE CROWNING MILESTONE • YEAR 21' : `Reflection on Year ${currentYear}`}
             </span>
-            <Sparkles size={14} color="#D4AF37" />
+            {currentYear === 21 ? (
+              <Award size={15} color="#FFD700" />
+            ) : (
+              <Sparkles size={14} color="#D4AF37" />
+            )}
           </div>
 
           <p
             style={{
               fontFamily: '"Playfair Display", serif',
               fontStyle: 'italic',
-              fontSize: 16,
-              color: '#F7E7CE',
-              margin: '4px 0 0',
-              lineHeight: 1.45,
+              fontSize: 16.5,
+              color: currentYear === 21 ? '#FFFDF0' : '#F7E7CE',
+              margin: '6px 0 10px',
+              lineHeight: 1.5,
             }}
           >
             "{YEAR_MESSAGES[currentYear] || 'Every year with you has been a treasure.'}"
           </p>
+
+          {/* Forward Action Button so she flows naturally from Year 1 to 21 */}
+          <div style={{ marginTop: 10 }}>
+            {currentYear < 21 ? (
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={nextYear}
+                style={{
+                  background: 'linear-gradient(135deg, rgba(196,30,58,0.7) 0%, rgba(139,0,0,0.85) 100%)',
+                  border: '1px solid rgba(212,175,55,0.5)',
+                  borderRadius: 20,
+                  padding: '7px 18px',
+                  color: '#FFF',
+                  fontFamily: '"Cormorant Garamond", serif',
+                  fontSize: 13,
+                  letterSpacing: 2,
+                  textTransform: 'uppercase',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  boxShadow: '0 4px 15px rgba(196,30,58,0.3)',
+                }}
+              >
+                <span>Read Year {currentYear + 1}</span>
+                <ChevronRight size={14} color="#D4AF37" />
+              </motion.button>
+            ) : (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={fireMilestoneConfetti}
+                style={{
+                  background: 'linear-gradient(135deg, #D4AF37 0%, #AA771C 100%)',
+                  border: '1px solid #FFF',
+                  borderRadius: 20,
+                  padding: '8px 22px',
+                  color: '#1A0505',
+                  fontFamily: '"Cormorant Garamond", serif',
+                  fontSize: 13.5,
+                  letterSpacing: 2,
+                  textTransform: 'uppercase',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  boxShadow: '0 4px 20px rgba(212,175,55,0.6)',
+                }}
+              >
+                <Sparkles size={15} color="#1A0505" />
+                <span>Happy 21st Birthday, Motu! 🌹</span>
+              </motion.button>
+            )}
+          </div>
         </motion.div>
       </AnimatePresence>
+
+      {/* Progress Counter */}
+      <div
+        style={{
+          fontFamily: '"Cormorant Garamond", serif',
+          fontSize: 11,
+          letterSpacing: 2.5,
+          color: 'rgba(212,175,55,0.65)',
+          textTransform: 'uppercase',
+          margin: '-2px 0 0',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 6,
+          zIndex: 10,
+        }}
+      >
+        <span>{viewedYears.size} of 21 Years Discovered</span>
+        {viewedYears.size === 21 && (
+          <span style={{ color: '#FFD700', fontWeight: 'bold' }}>• ALL COMPLETE ♥</span>
+        )}
+      </div>
 
       {/* Year selector ribbon at bottom */}
       <div
@@ -271,6 +391,7 @@ export default function Page4_Countdown21() {
       >
         <button
           onClick={prevYear}
+          aria-label="Previous year"
           style={{
             background: 'rgba(26,5,5,0.8)',
             border: '1px solid rgba(212,175,55,0.3)',
@@ -282,12 +403,14 @@ export default function Page4_Countdown21() {
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
+            flexShrink: 0,
           }}
         >
           <ChevronLeft size={15} />
         </button>
 
         <div
+          ref={ribbonRef}
           style={{
             display: 'flex',
             gap: 5,
@@ -300,6 +423,7 @@ export default function Page4_Countdown21() {
           {Array.from({ length: 21 }, (_, i) => i + 1).map((yr) => (
             <button
               key={yr}
+              data-year={yr}
               onClick={() => selectYear(yr)}
               style={{
                 width: 28,
@@ -311,14 +435,15 @@ export default function Page4_Countdown21() {
                   yr === currentYear
                     ? 'radial-gradient(circle, #C41E3A, #8B0000)'
                     : viewedYears.has(yr)
-                    ? 'rgba(61,12,2,0.6)'
+                    ? 'rgba(139,0,0,0.5)'
                     : 'rgba(26,5,5,0.4)',
-                color: yr === currentYear ? '#FFF' : '#B76E79',
+                color: yr === currentYear ? '#FFF' : viewedYears.has(yr) ? '#F7E7CE' : '#B76E79',
                 fontFamily: '"Cormorant Garamond", serif',
                 fontSize: 12,
                 fontWeight: yr === currentYear ? 'bold' : 'normal',
                 cursor: 'pointer',
                 boxShadow: yr === currentYear ? '0 0 10px rgba(212,175,55,0.5)' : 'none',
+                transition: 'all 0.2s ease',
               }}
             >
               {yr}
@@ -328,6 +453,7 @@ export default function Page4_Countdown21() {
 
         <button
           onClick={nextYear}
+          aria-label="Next year"
           style={{
             background: 'rgba(26,5,5,0.8)',
             border: '1px solid rgba(212,175,55,0.3)',
@@ -339,6 +465,7 @@ export default function Page4_Countdown21() {
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
+            flexShrink: 0,
           }}
         >
           <ChevronRight size={15} />
