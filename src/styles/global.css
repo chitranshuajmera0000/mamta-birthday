@@ -1,0 +1,305 @@
+@import "tailwindcss";
+
+/* ============================================
+   GLOBAL CSS — Dark Romantic Luxury
+   ============================================ */
+
+:root {
+  --crimson: #8B0000;
+  --rose: #C41E3A;
+  --blush: #E8929A;
+  --petal: #F4C2C2;
+  --rose-gold: #B76E79;
+  --gold: #D4AF37;
+  --champagne: #F7E7CE;
+  --midnight: #0D0D0D;
+  --deep-maroon: #1A0505;
+  --wine: #3D0C02;
+  --velvet: #1C0A1A;
+  --candle-glow: rgba(255, 180, 60, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: var(--midnight);
+  color: var(--champagne);
+  cursor: default;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 40%, rgba(139, 0, 0, 0.18) 0%, rgba(61, 12, 2, 0.1) 45%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+  animation: ambientBreathe 9s ease-in-out infinite alternate;
+}
+
+@keyframes ambientBreathe {
+  0% { opacity: 0.45; transform: scale(0.97); }
+  50% { opacity: 0.9; transform: scale(1.03); }
+  100% { opacity: 0.45; transform: scale(0.97); }
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--rose-gold); border-radius: 2px; }
+
+/* ── Custom Cursor ── */
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--rose);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s;
+  mix-blend-mode: screen;
+}
+
+/* ── Gold shimmer text ── */
+.text-gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--gold) 0%,
+    #fff8dc 25%,
+    var(--gold) 50%,
+    #fff8dc 75%,
+    var(--gold) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Film grain overlay ── */
+.film-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Glassmorphism ── */
+.glass-warm {
+  background: rgba(26, 5, 5, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 8px 32px rgba(139, 0, 0, 0.2), inset 0 1px 0 rgba(212, 175, 55, 0.1);
+}
+
+/* ── Vignette ── */
+.vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.7) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Candle flame ── */
+.candle-flame {
+  animation: flicker 3s ease-in-out infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { transform: scaleX(1) scaleY(1); opacity: 1; }
+  25% { transform: scaleX(0.95) scaleY(1.05); opacity: 0.9; }
+  50% { transform: scaleX(1.05) scaleY(0.97); opacity: 0.95; }
+  75% { transform: scaleX(0.98) scaleY(1.02); opacity: 0.92; }
+}
+
+/* ── Page base ── */
+.page-base {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Heartbeat ── */
+.heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.05); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.05); }
+  70% { transform: scale(1); }
+}
+
+/* ── Float animations ── */
+.float-1 { animation: floatY 6s ease-in-out infinite; }
+.float-2 { animation: floatY 8s ease-in-out infinite 1s; }
+.float-3 { animation: floatY 7s ease-in-out infinite 2s; }
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+/* ── Typewriter cursor ── */
+.typewriter-cursor::after {
+  content: '|';
+  animation: blink 1s step-start infinite;
+  color: var(--gold);
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ── Gold border glow ── */
+.border-gold-glow {
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.1), inset 0 0 20px rgba(212, 175, 55, 0.05);
+}
+
+/* ── Transition overlay ── */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  background: var(--crimson);
+  z-index: 10000;
+  transform-origin: left;
+}
+
+/* ── Parchment ── */
+.parchment {
+  background: linear-gradient(
+    135deg,
+    #f5e6c8 0%,
+    #ede0c0 25%,
+    #f2e2c4 50%,
+    #e8d8b0 75%,
+    #f5e6c8 100%
+  );
+  position: relative;
+}
+
+.parchment::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ── Velvet card ── */
+.velvet-card {
+  background: linear-gradient(135deg, #2a0a28, #1c0a1a, #200816);
+  border: 1px solid rgba(183, 110, 121, 0.3);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(212,175,55,0.1),
+    inset 0 1px 0 rgba(212,175,55,0.1);
+}
+
+/* ── Responsive & Touch Handling ── */
+@media (max-width: 768px) {
+  html, body { font-size: 14px; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .cursor-dot {
+    display: none !important;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Scrollable page ── */
+.page-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
+/* ── Promise tag sway ── */
+.sway-1 { animation: sway 4s ease-in-out infinite; }
+.sway-2 { animation: sway 4.5s ease-in-out infinite 0.5s; }
+.sway-3 { animation: sway 5s ease-in-out infinite 1s; }
+.sway-4 { animation: sway 4.2s ease-in-out infinite 1.5s; }
+.sway-5 { animation: sway 4.8s ease-in-out infinite 0.3s; }
+.sway-6 { animation: sway 4.1s ease-in-out infinite 0.8s; }
+.sway-7 { animation: sway 5.2s ease-in-out infinite 1.2s; }
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+
+/* ── Orb pulse ── */
+@keyframes orbPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--rose), 0 0 40px rgba(196, 30, 58, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px var(--rose), 0 0 80px rgba(196, 30, 58, 0.5), 0 0 120px rgba(196, 30, 58, 0.2);
+  }
+}
+
+.orb-pulse { animation: orbPulse 2s ease-in-out infinite; }
+
+/* ── Star twinkle ── */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* ── Film burn ── */
+@keyframes filmBurn {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.film-burn {
+  animation: filmBurn 0.8s ease-in-out forwards;
+}
