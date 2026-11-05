@@ -24,15 +24,17 @@ export default function Page6_RoseGarden3D() {
       style={{
         width: '100vw',
         minHeight: '100dvh',
+        height: '100dvh',
         background: 'radial-gradient(ellipse at center, #1E050D 0%, #0D0206 60%, #050102 100%)',
         position: 'relative',
         overflowY: 'auto',
         overflowX: 'hidden',
+        WebkitOverflowScrolling: 'touch',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: 'clamp(20px, 3.5vh, 32px) 20px clamp(28px, 4.5vh, 40px)',
+        padding: 'clamp(20px, 3.5vh, 32px) 20px clamp(50px, 8vh, 80px)',
         gap: 'clamp(12px, 2.2vh, 22px)',
         scrollbarWidth: 'none',
       }}

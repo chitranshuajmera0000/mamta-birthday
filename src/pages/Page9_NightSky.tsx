@@ -85,16 +85,18 @@ export default function Page9_NightSky() {
       style={{
         width: '100vw',
         minHeight: '100dvh',
+        height: '100dvh',
         background: '#040108',
         position: 'relative',
         overflowY: 'auto',
         overflowX: 'hidden',
+        WebkitOverflowScrolling: 'touch',
         scrollbarWidth: 'none',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: 'clamp(20px, 3.5vh, 32px) 20px clamp(28px, 4.5vh, 40px)',
+        padding: 'clamp(20px, 3.5vh, 32px) 20px clamp(50px, 8vh, 80px)',
         gap: 'clamp(14px, 2.5vh, 24px)',
       }}
     >

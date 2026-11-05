@@ -38,15 +38,17 @@ export default function Page4_Countdown21() {
       style={{
         width: '100vw',
         minHeight: '100dvh',
+        height: '100dvh',
         background: 'radial-gradient(ellipse at center, #1C0A1A 0%, #0D0509 70%, #050204 100%)',
         position: 'relative',
         overflowY: 'auto',
         overflowX: 'hidden',
+        WebkitOverflowScrolling: 'touch',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: 'clamp(18px, 3.2vh, 32px) 14px clamp(24px, 4vh, 36px)',
+        padding: 'clamp(18px, 3.2vh, 32px) 14px clamp(50px, 8vh, 80px)',
         gap: 'clamp(12px, 2vh, 22px)',
         scrollbarWidth: 'none',
       }}

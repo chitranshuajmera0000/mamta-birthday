@@ -56,10 +56,12 @@ export default function Page2_ReasonsILoveYou() {
       style={{
         width: '100vw',
         minHeight: '100dvh',
+        height: '100dvh',
         background: 'radial-gradient(ellipse at top, #1A0505 0%, #0D0204 60%, #050102 100%)',
         position: 'relative',
         overflowY: 'auto',
         overflowX: 'hidden',
+        WebkitOverflowScrolling: 'touch',
         padding: 'clamp(20px, 3.5vh, 32px) clamp(14px, 3vw, 24px) 80px',
         scrollbarWidth: 'thin',
         scrollbarColor: '#D4AF37 transparent',

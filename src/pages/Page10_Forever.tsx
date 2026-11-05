@@ -36,15 +36,17 @@ export default function Page10_Forever() {
       style={{
         width: '100vw',
         minHeight: '100dvh',
+        height: '100dvh',
         background: '#080205',
         position: 'relative',
         overflowY: 'auto',
         overflowX: 'hidden',
+        WebkitOverflowScrolling: 'touch',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: 'clamp(20px, 3.5vh, 32px) 14px clamp(28px, 4.5vh, 40px)',
+        padding: 'clamp(20px, 3.5vh, 32px) 14px clamp(50px, 8vh, 80px)',
         gap: 'clamp(12px, 2vh, 20px)',
         scrollbarWidth: 'none',
       }}
