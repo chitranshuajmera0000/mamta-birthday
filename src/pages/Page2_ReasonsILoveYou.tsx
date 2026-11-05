@@ -62,7 +62,9 @@ export default function Page2_ReasonsILoveYou() {
         overflowY: 'auto',
         overflowX: 'hidden',
         WebkitOverflowScrolling: 'touch',
-        padding: 'clamp(20px, 3.5vh, 32px) clamp(14px, 3vw, 24px) 80px',
+        touchAction: 'pan-y',
+        overscrollBehaviorY: 'contain',
+        padding: 'clamp(20px, 3.5vh, 32px) clamp(14px, 3vw, 24px) 100px',
         scrollbarWidth: 'thin',
         scrollbarColor: '#D4AF37 transparent',
       }}
@@ -134,6 +136,7 @@ export default function Page2_ReasonsILoveYou() {
           margin: '0 auto',
           position: 'relative',
           zIndex: 10,
+          touchAction: 'pan-y',
         }}
       >
         {REASONS_I_LOVE_YOU.map((reason, idx) => {
@@ -148,6 +151,7 @@ export default function Page2_ReasonsILoveYou() {
                 height: 195,
                 perspective: 1000,
                 cursor: 'pointer',
+                touchAction: 'pan-y',
               }}
             >
               <motion.div

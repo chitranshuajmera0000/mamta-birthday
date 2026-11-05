@@ -37,12 +37,14 @@ export default function Page7_Promises() {
         overflowY: 'auto',
         overflowX: 'hidden',
         WebkitOverflowScrolling: 'touch',
+        touchAction: 'pan-y',
+        overscrollBehaviorY: 'contain',
         scrollbarWidth: 'none',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: 'clamp(20px, 3.5vh, 32px) 16px clamp(60px, 10vh, 100px)',
+        padding: 'clamp(20px, 3.5vh, 32px) 16px clamp(70px, 12vh, 120px)',
         gap: 'clamp(14px, 2.5vh, 24px)',
       }}
     >
@@ -119,6 +121,7 @@ export default function Page7_Promises() {
           width: '100%',
           zIndex: 10,
           padding: '10px 0',
+          touchAction: 'pan-y',
         }}
       >
         {PROMISES.map((promise, idx) => {
@@ -134,6 +137,7 @@ export default function Page7_Promises() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 transformOrigin: 'top center',
+                touchAction: 'pan-y',
               }}
             >
               {/* Hanging Red String */}

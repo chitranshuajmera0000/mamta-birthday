@@ -194,7 +194,7 @@ export default function App() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.35 }}
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '100%', height: '100%', overflow: 'hidden' }}
         >
           <Routes location={location}>
             {PAGES.map((page) => (
