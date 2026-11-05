@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Volume2, VolumeX, Music, Disc3 } from 'lucide-react';
+import { Volume2, VolumeX, Music, Disc3, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-interface TrackInfo {
+export interface TrackInfo {
+  id: string;
   title: string;
   artist: string;
   src: string;
@@ -10,31 +11,35 @@ interface TrackInfo {
   pages: number[];
 }
 
-const TRACKS: TrackInfo[] = [
+export const TRACKS: TrackInfo[] = [
   {
+    id: 'perfect',
     title: 'Perfect',
     artist: 'Ed Sheeran',
     src: '/assets/perfect.mp3',
-    pages: [0, 1, 2], // The Invitation, Our Story, 21 Reasons
+    pages: [0, 1], // The Invitation, Our Story (First 2 pages)
   },
   {
+    id: 'khat',
     title: 'Khat',
     artist: 'Navv Inder',
     src: '/assets/khat.mp3',
-    pages: [3, 4], // Memory Theater, The 21 Countdown
+    pages: [2, 3], // 21 Reasons I Love You, Memory Theater (Next 2 pages)
   },
   {
+    id: 'afreen',
     title: 'Afreen Afreen',
     artist: 'Rahat Fateh Ali Khan & Momina',
     src: '/assets/afreen.mp3',
-    pages: [5, 6, 7], // The Enchanted Rose, Promises, Night Sky
+    pages: [4, 5, 6, 7], // The 21 Countdown, The Rose, Promises, Night Sky
   },
   {
+    id: 'alfaaz',
     title: 'Alfaaz',
     artist: 'Romantic Finale',
     src: '/assets/alfaaz.mp3',
     fallbackSrc: '/assets/afreen.mp3',
-    pages: [8], // Forever With You
+    pages: [8], // Forever With You (At last)
   },
 ];
 
@@ -43,92 +48,99 @@ interface AudioManagerProps {
 }
 
 export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
+  // Determine initial target track based on current page
+  const initialTrack = TRACKS.find((t) => t.pages.includes(currentPage)) || TRACKS[0];
+
+  const [currentTrack, setCurrentTrack] = useState<TrackInfo>(initialTrack);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [showControls, setShowControls] = useState(false);
-  const [volume, setVolume] = useState(0.65);
+  const [volume, setVolume] = useState(0.7);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const currentTrackRef = useRef<TrackInfo>(TRACKS[0]);
   const isPlayingRef = useRef(false);
+  const manualTrackOverrideRef = useRef(false);
   const toastTimeoutRef = useRef<number | null>(null);
-
-  // Find track corresponding to current page
-  const targetTrack = TRACKS.find((t) => t.pages.includes(currentPage)) || TRACKS[0];
 
   const showTrackToast = (text: string) => {
     if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
     setToastMessage(text);
     toastTimeoutRef.current = window.setTimeout(() => {
       setToastMessage(null);
-    }, 3800);
+    }, 3600);
   };
 
-  // Switch or play track
-  const playTrack = useCallback(
-    (track: TrackInfo, shouldForcePlay = false) => {
-      const audio = audioRef.current;
-      if (!audio) return;
-
-      const trackChanged = currentTrackRef.current.src !== track.src;
-      currentTrackRef.current = track;
-
-      if (trackChanged) {
-        audio.src = track.src;
-        audio.load();
-      }
-
-      if (shouldForcePlay || isPlayingRef.current) {
-        audio
-          .play()
-          .then(() => {
-            setIsPlaying(true);
-            isPlayingRef.current = true;
-            if (trackChanged || shouldForcePlay) {
-              showTrackToast(`♪ ${track.title} • ${track.artist}`);
-            }
-          })
-          .catch((err) => {
-            console.warn('Playback error or auto-play prevented:', err);
-          });
-      }
-    },
-    []
-  );
-
-  // Toggle play/pause
-  const togglePlay = () => {
+  // Safe Play helper
+  const safePlay = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
+    audio
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+        isPlayingRef.current = true;
+      })
+      .catch((err) => {
+        console.warn('Playback request prevented or waiting for interaction:', err);
+      });
+  }, []);
+
+  // Safe Pause helper
+  const safePause = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.pause();
+    setIsPlaying(false);
+    isPlayingRef.current = false;
+  }, []);
+
+  // Switch Track manually or by page
+  const selectTrack = useCallback(
+    (track: TrackInfo, forcePlay = false) => {
+      const audio = audioRef.current;
+      if (!audio) return;
+
+      const isSameTrack = currentTrack.src === track.src;
+
+      if (!isSameTrack) {
+        setCurrentTrack(track);
+        showTrackToast(`♪ ${track.title} • ${track.artist}`);
+      }
+
+      if (forcePlay || isPlayingRef.current) {
+        // Allow state to settle, then play
+        setTimeout(() => {
+          safePlay();
+        }, 50);
+      }
+    },
+    [currentTrack.src, safePlay]
+  );
+
+  // Toggle play/pause button
+  const togglePlay = () => {
     if (isPlaying) {
-      audio.pause();
-      setIsPlaying(false);
-      isPlayingRef.current = false;
+      safePause();
       showTrackToast('♪ Music Paused');
     } else {
-      audio
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-          isPlayingRef.current = true;
-          showTrackToast(`♪ Playing: ${currentTrackRef.current.title}`);
-        })
-        .catch((err) => {
-          console.warn('Playback resume failed:', err);
-        });
+      safePlay();
+      showTrackToast(`♪ Playing: ${currentTrack.title}`);
     }
   };
 
-  // Handle page change: switch track if needed without interrupting if on the same track
+  // Page change sync: switch track to page's default unless user manually overrode recently
   useEffect(() => {
-    if (targetTrack.src !== currentTrackRef.current.src) {
-      playTrack(targetTrack, isPlayingRef.current);
+    const pageTrack = TRACKS.find((t) => t.pages.includes(currentPage));
+    if (pageTrack && pageTrack.src !== currentTrack.src) {
+      manualTrackOverrideRef.current = false;
+      selectTrack(pageTrack, isPlayingRef.current);
     }
-  }, [currentPage, targetTrack, playTrack]);
+  }, [currentPage, currentTrack.src, selectTrack]);
 
-  // Volume & mute controls
+  // Volume & Mute sync
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = isMuted ? 0 : volume;
@@ -138,38 +150,46 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
   // Listen to the custom event from "Begin Our Story" button on Page 0
   useEffect(() => {
     const handleStartAudio = () => {
-      const trackToPlay = TRACKS.find((t) => t.pages.includes(1)) || TRACKS[0];
-      playTrack(trackToPlay, true);
+      // Begin story starts with Perfect
+      selectTrack(TRACKS[0], true);
     };
 
     window.addEventListener('start-romantic-music', handleStartAudio);
     return () => {
       window.removeEventListener('start-romantic-music', handleStartAudio);
     };
-  }, [playTrack]);
+  }, [selectTrack]);
 
-  // Fallback for alfaaz or missing audio
+  // Audio error fallback (e.g. for alfaaz.mp3 before it is uploaded)
   const handleAudioError = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (currentTrackRef.current.fallbackSrc) {
-      console.log(`Audio error on ${currentTrackRef.current.src}, falling back to ${currentTrackRef.current.fallbackSrc}`);
-      audio.src = currentTrackRef.current.fallbackSrc;
-      audio.load();
+    console.warn(`Audio error while loading ${currentTrack.src}`);
+    if (currentTrack.fallbackSrc) {
+      const fallback = TRACKS.find((t) => t.src === currentTrack.fallbackSrc) || TRACKS[2];
+      console.log(`Falling back to ${fallback.title}`);
+      setCurrentTrack(fallback);
       if (isPlayingRef.current) {
-        audio.play().catch(() => {});
+        setTimeout(safePlay, 100);
       }
     }
   };
 
   return (
     <>
-      {/* Hidden audio element */}
+      {/* HTML5 Audio Element */}
       <audio
         ref={audioRef}
-        src={currentTrackRef.current.src}
+        key={currentTrack.src}
+        src={currentTrack.src}
         preload="auto"
         loop
+        onPlay={() => {
+          setIsPlaying(true);
+          isPlayingRef.current = true;
+        }}
+        onPause={() => {
+          setIsPlaying(false);
+          isPlayingRef.current = false;
+        }}
         onError={handleAudioError}
       />
 
@@ -178,13 +198,13 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
           position: 'fixed',
           top: 'clamp(12px, 2vh, 18px)',
           right: 'clamp(12px, 2.5vw, 20px)',
-          zIndex: 50,
+          zIndex: 60,
           display: 'flex',
           alignItems: 'center',
           gap: 10,
         }}
       >
-        {/* Floating Now-Playing Song Toast */}
+        {/* Floating Song Toast Notification */}
         <AnimatePresence>
           {toastMessage && (
             <motion.div
@@ -192,9 +212,9 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 20, scale: 0.9 }}
               style={{
-                background: 'rgba(26, 5, 12, 0.92)',
+                background: 'rgba(26, 5, 12, 0.94)',
                 border: '1px solid rgba(212, 175, 55, 0.55)',
-                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.25)',
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 55, 0.25)',
                 backdropFilter: 'blur(10px)',
                 borderRadius: 20,
                 padding: '6px 14px',
@@ -215,7 +235,7 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
           )}
         </AnimatePresence>
 
-        {/* Music Player Button & Popover */}
+        {/* Music Disc Button & Popover */}
         <div
           style={{ position: 'relative' }}
           onMouseEnter={() => setShowControls(true)}
@@ -250,17 +270,17 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
             {isPlaying ? (
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
-                <Disc3 size={19} color="#D4AF37" />
+                <Disc3 size={20} color="#D4AF37" />
               </motion.div>
             ) : (
               <Music size={18} color="rgba(212, 175, 55, 0.65)" />
             )}
           </motion.button>
 
-          {/* Interactive Popover Controls */}
+          {/* Interactive Popover with Track Selector */}
           <AnimatePresence>
             {showControls && (
               <motion.div
@@ -280,17 +300,17 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 10,
-                  minWidth: 190,
+                  minWidth: 220,
                   backdropFilter: 'blur(16px)',
-                  zIndex: 60,
+                  zIndex: 70,
                 }}
               >
-                {/* Track Details */}
+                {/* Now Playing Title */}
                 <div style={{ textAlign: 'center', borderBottom: '1px solid rgba(212, 175, 55, 0.2)', paddingBottom: 8 }}>
                   <div
                     style={{
                       fontFamily: '"Cormorant Garamond", serif',
-                      fontSize: 14,
+                      fontSize: 14.5,
                       fontWeight: 700,
                       color: '#D4AF37',
                       letterSpacing: 1,
@@ -299,7 +319,7 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
                       textOverflow: 'ellipsis',
                     }}
                   >
-                    {currentTrackRef.current.title}
+                    {currentTrack.title}
                   </div>
                   <div
                     style={{
@@ -310,11 +330,11 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
                       marginTop: 2,
                     }}
                   >
-                    {currentTrackRef.current.artist}
+                    {currentTrack.artist}
                   </div>
                 </div>
 
-                {/* Status & Volume Slider */}
+                {/* Volume Slider & Mute Toggle */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <button
                     onClick={() => setIsMuted((m) => !m)}
@@ -348,6 +368,57 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
                       cursor: 'pointer',
                     }}
                   />
+                </div>
+
+                {/* Song Quick Selector */}
+                <div style={{ borderTop: '1px solid rgba(212, 175, 55, 0.15)', paddingTop: 8 }}>
+                  <div
+                    style={{
+                      fontFamily: '"Cormorant Garamond", serif',
+                      fontSize: 10,
+                      letterSpacing: 2,
+                      color: 'rgba(212, 175, 55, 0.65)',
+                      textTransform: 'uppercase',
+                      marginBottom: 6,
+                    }}
+                  >
+                    Romantic Playlist
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    {TRACKS.map((t) => {
+                      const isSelected = currentTrack.src === t.src;
+                      return (
+                        <button
+                          key={t.id}
+                          onClick={() => {
+                            manualTrackOverrideRef.current = true;
+                            selectTrack(t, true);
+                          }}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '5px 8px',
+                            borderRadius: 6,
+                            background: isSelected ? 'rgba(196, 30, 58, 0.35)' : 'rgba(255, 255, 255, 0.03)',
+                            border: `1px solid ${isSelected ? 'rgba(212, 175, 55, 0.5)' : 'transparent'}`,
+                            color: isSelected ? '#D4AF37' : '#F7E7CE',
+                            cursor: 'pointer',
+                            textAlign: 'left',
+                            transition: 'all 0.15s ease',
+                          }}
+                        >
+                          <div>
+                            <div style={{ fontFamily: '"Cormorant Garamond", serif', fontSize: 12.5, fontWeight: 600 }}>
+                              {t.title}
+                            </div>
+                            <div style={{ fontSize: 9.5, opacity: 0.65 }}>{t.artist}</div>
+                          </div>
+                          {isSelected && <Check size={13} color="#D4AF37" />}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </motion.div>
             )}
