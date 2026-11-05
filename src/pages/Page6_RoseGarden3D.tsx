@@ -227,21 +227,21 @@ export default function Page6_RoseGarden3D() {
             style={{
               position: 'fixed',
               inset: 0,
-              background: 'radial-gradient(ellipse at 50% 50%, rgba(139, 0, 30, 0.42) 0%, rgba(61, 8, 18, 0.65) 45%, rgba(13, 2, 6, 0.88) 100%)',
-              zIndex: 100,
+              background: 'radial-gradient(ellipse at 50% 50%, rgba(139, 0, 30, 0.48) 0%, rgba(61, 8, 18, 0.78) 45%, rgba(13, 2, 6, 0.94) 100%)',
+              zIndex: 2000,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               backdropFilter: 'blur(16px)',
-              padding: 20,
+              padding: 'clamp(16px, 4vh, 36px) clamp(16px, 5vw, 32px)',
             }}
           >
             {/* Glowing Aurora Rings Behind Modal */}
             <div
               style={{
                 position: 'absolute',
-                width: 520,
-                height: 520,
+                width: 'min(90vw, 520px)',
+                height: 'min(90vw, 520px)',
                 borderRadius: '50%',
                 background: 'radial-gradient(circle, rgba(196, 30, 58, 0.35) 0%, rgba(212, 175, 55, 0.18) 50%, transparent 75%)',
                 filter: 'blur(45px)',
@@ -279,24 +279,28 @@ export default function Page6_RoseGarden3D() {
               ))}
             </div>
 
-            {/* The Illuminated Velvet Poem Card */}
+            {/* The Illuminated Velvet Poem Card - Perfectly Spaced on Mobile & Desktop */}
             <motion.div
-              initial={{ scale: 0.85, y: 25 }}
+              initial={{ scale: 0.88, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.85, opacity: 0 }}
-              transition={{ type: 'spring', damping: 22 }}
+              exit={{ scale: 0.88, opacity: 0 }}
+              transition={{ type: 'spring', damping: 24, stiffness: 280 }}
               onClick={(e) => e.stopPropagation()}
               style={{
                 background: 'linear-gradient(155deg, #2D0814 0%, #1A030A 60%, #0E0105 100%)',
-                border: '1.5px solid rgba(212,175,55,0.6)',
+                border: '1.5px solid rgba(212,175,55,0.65)',
                 boxShadow: '0 25px 80px rgba(0,0,0,0.95), 0 0 50px rgba(196,30,58,0.4), inset 0 0 30px rgba(212,175,55,0.08)',
-                padding: '38px 34px',
-                maxWidth: 480,
-                width: '100%',
-                borderRadius: 12,
+                padding: 'clamp(24px, 4vh, 36px) clamp(18px, 4.5vw, 32px)',
+                maxWidth: 460,
+                width: 'min(88vw, 450px)',
+                maxHeight: '86vh',
+                overflowY: 'auto',
+                scrollbarWidth: 'none',
+                borderRadius: 14,
                 position: 'relative',
                 textAlign: 'center',
                 zIndex: 10,
+                margin: '0 auto',
               }}
             >
               {/* Inner Gold Filigree Hairline Border */}
@@ -305,19 +309,20 @@ export default function Page6_RoseGarden3D() {
                   position: 'absolute',
                   inset: 8,
                   border: '1px solid rgba(212,175,55,0.25)',
-                  borderRadius: 8,
+                  borderRadius: 10,
                   pointerEvents: 'none',
                 }}
               />
 
               <button
                 onClick={() => setShowPoem(false)}
+                aria-label="Close"
                 style={{
                   position: 'absolute',
-                  top: 14,
-                  right: 14,
-                  background: 'rgba(26,5,10,0.6)',
-                  border: '1px solid rgba(212,175,55,0.3)',
+                  top: 12,
+                  right: 12,
+                  background: 'rgba(26,5,10,0.7)',
+                  border: '1px solid rgba(212,175,55,0.4)',
                   borderRadius: '50%',
                   width: 32,
                   height: 32,
@@ -333,12 +338,12 @@ export default function Page6_RoseGarden3D() {
               </button>
 
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 6 }}>
-                <span style={{ fontSize: 13, color: '#D4AF37' }}>✦</span>
+                <span style={{ fontSize: 12, color: '#D4AF37' }}>✦</span>
                 <p
                   style={{
                     fontFamily: '"Cormorant Garamond", serif',
-                    fontSize: 12,
-                    letterSpacing: 4,
+                    fontSize: 11.5,
+                    letterSpacing: 3,
                     color: '#D4AF37',
                     textTransform: 'uppercase',
                     margin: 0,
@@ -347,16 +352,17 @@ export default function Page6_RoseGarden3D() {
                 >
                   WRITTEN FOR DR. MAMTA BY DR. AKSHAT
                 </p>
-                <span style={{ fontSize: 13, color: '#D4AF37' }}>✦</span>
+                <span style={{ fontSize: 12, color: '#D4AF37' }}>✦</span>
               </div>
 
               <h2
                 style={{
                   fontFamily: '"Great Vibes", cursive',
-                  fontSize: 44,
+                  fontSize: 'clamp(34px, 6vw, 44px)',
                   color: '#FFF',
-                  margin: '4px 0 12px',
+                  margin: '2px 0 10px',
                   textShadow: '0 0 25px rgba(212,175,55,0.5)',
+                  lineHeight: 1.15,
                 }}
               >
                 The Special Bloom
@@ -365,8 +371,8 @@ export default function Page6_RoseGarden3D() {
               <div
                 style={{
                   height: 1,
-                  width: '70%',
-                  margin: '0 auto 20px',
+                  width: '65%',
+                  margin: '0 auto 16px',
                   background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)',
                 }}
               />
@@ -374,9 +380,9 @@ export default function Page6_RoseGarden3D() {
               <p
                 style={{
                   fontFamily: '"Cormorant Garamond", serif',
-                  fontSize: 18.5,
+                  fontSize: 'clamp(15px, 2.4vw, 17.5px)',
                   fontStyle: 'italic',
-                  lineHeight: 1.85,
+                  lineHeight: 1.7,
                   color: '#F7E7CE',
                   whiteSpace: 'pre-line',
                   margin: 0,

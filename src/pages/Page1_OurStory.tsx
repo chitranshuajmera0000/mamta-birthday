@@ -557,12 +557,12 @@ export default function Page1_OurStory() {
               position: 'fixed',
               inset: 0,
               background: 'rgba(5,1,3,0.92)',
-              zIndex: 100,
+              zIndex: 2000,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               backdropFilter: 'blur(10px)',
-              padding: '16px',
+              padding: 'clamp(16px, 4vh, 32px) clamp(16px, 5vw, 32px)',
             }}
           >
             <motion.div
@@ -573,16 +573,17 @@ export default function Page1_OurStory() {
               onClick={(e) => e.stopPropagation()}
               style={{
                 background: '#FAF7F2',
-                maxWidth: 480,
-                width: '100%',
-                maxHeight: '90vh',
+                maxWidth: 460,
+                width: 'min(90vw, 450px)',
+                maxHeight: '88vh',
                 overflowY: 'auto',
-                borderRadius: 8,
+                borderRadius: 12,
                 position: 'relative',
                 boxShadow: '0 30px 90px rgba(0,0,0,0.95), 0 0 50px rgba(212,175,55,0.35)',
                 border: '2px solid rgba(212,175,55,0.4)',
-                padding: '24px 22px 28px',
+                padding: 'clamp(20px, 3.5vh, 28px) clamp(16px, 4vw, 24px)',
                 scrollbarWidth: 'none',
+                margin: '0 auto',
               }}
             >
               {/* Close Button */}

@@ -68,43 +68,6 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [safeIndex, transitioning]);
 
-  // Mobile Touch Swipe Navigation
-  useEffect(() => {
-    let startX = 0;
-    let startY = 0;
-
-    const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-      }
-    };
-
-    const onTouchEnd = (e: TouchEvent) => {
-      if (e.changedTouches.length > 0) {
-        const deltaX = e.changedTouches[0].clientX - startX;
-        const deltaY = e.changedTouches[0].clientY - startY;
-
-        // Trigger chapter transition on horizontal swipe > 60px
-        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 60) {
-          if (deltaX < 0 && safeIndex < PAGES.length - 1) {
-            goToPage(safeIndex + 1);
-          } else if (deltaX > 0 && safeIndex > 0) {
-            goToPage(safeIndex - 1);
-          }
-        }
-      }
-    };
-
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchend', onTouchEnd, { passive: true });
-
-    return () => {
-      window.removeEventListener('touchstart', onTouchStart);
-      window.removeEventListener('touchend', onTouchEnd);
-    };
-  }, [safeIndex, transitioning]);
-
   // Toast on route change
   useEffect(() => {
     setPageToast(PAGES[safeIndex].name);
