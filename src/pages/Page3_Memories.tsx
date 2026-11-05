@@ -59,7 +59,7 @@ export default function Page3_Memories() {
   const [isBurning, setIsBurning] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const autoplayTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const currentPhoto = PHOTOS[currentIndex];
   const meta = REEL_METADATA[currentIndex % REEL_METADATA.length];
