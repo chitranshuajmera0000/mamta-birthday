@@ -9,6 +9,7 @@ export interface TrackInfo {
   src: string;
   fallbackSrc?: string;
   pages: number[];
+  startTime?: number;
 }
 
 export const TRACKS: TrackInfo[] = [
@@ -22,9 +23,10 @@ export const TRACKS: TrackInfo[] = [
   {
     id: 'khat',
     title: 'Khat',
-    artist: 'Navv Inder',
+    artist: 'Navjot Ahuja',
     src: '/assets/khat.mp3',
     pages: [3, 4, 5, 6], // Memory Theater, The 21 Countdown, The Rose, Promises (Pages 3, 4, 5, 6)
+    startTime: 18.5, // Start 2 seconds before the main lyrics kick in ("Kaagaz ke phool...")
   },
   {
     id: 'alfaaz',
@@ -124,6 +126,14 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
 
       // Always start playing immediately as page opens
       setTimeout(() => {
+        const audio = audioRef.current;
+        if (audio && track.startTime && isDifferent) {
+          try {
+            audio.currentTime = track.startTime;
+          } catch {
+            // handled in onLoadedMetadata
+          }
+        }
         safePlay();
       }, 50);
     },
@@ -203,6 +213,15 @@ export default function AudioManager({ currentPage = 0 }: AudioManagerProps) {
         preload="auto"
         autoPlay
         loop
+        onLoadedMetadata={(e) => {
+          if (currentTrack.startTime && currentTrack.startTime > 0) {
+            try {
+              e.currentTarget.currentTime = currentTrack.startTime;
+            } catch {
+              // ignore
+            }
+          }
+        }}
         onPlay={() => {
           setIsPlaying(true);
           isPlayingRef.current = true;
