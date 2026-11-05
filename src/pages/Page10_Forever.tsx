@@ -10,7 +10,7 @@ const FUTURE_PROMISES = [
   'Cooking dinners and burning things while laughing',
   'Holding hands through every high and low',
   'Watching you conquer every goal you set',
-  'Growing old, but always remaining my Motu & Bhalu',
+  'Growing old, but you will always remain my sweetest Bhalu (meri Motu)',
 ];
 
 export default function Page10_Forever() {

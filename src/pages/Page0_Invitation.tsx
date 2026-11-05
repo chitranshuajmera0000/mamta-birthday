@@ -109,7 +109,7 @@ export default function Page0_Invitation() {
               fontWeight: 500,
             }}
           >
-            AKSHAT PRESENTS • FOR MY FAVOURITE DOCTOR (MOTU)
+            FROM AKSHAT • DEDICATED TO DR. MAMTA (MERI BHALU & MOTU)
           </p>
           <div style={{ width: 24, height: 1, background: 'linear-gradient(90deg, rgba(212,175,55,0.7), transparent)' }} />
         </div>
@@ -182,7 +182,7 @@ export default function Page0_Invitation() {
               fontWeight: 600,
             }}
           >
-            Begin Our Story, Bhalu & Motu
+            Begin Our Story, Meri Bhalu (Motu) ♥
           </span>
           <Heart size={15} color="#D4AF37" fill="#D4AF37" />
         </motion.button>
