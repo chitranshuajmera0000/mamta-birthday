@@ -30,7 +30,7 @@ export default function Page7_Promises() {
     <div
       style={{
         width: '100vw',
-        height: '100vh',
+        minHeight: '100dvh',
         background: '#1C0A1A',
         position: 'relative',
         overflowY: 'auto',
@@ -39,8 +39,9 @@ export default function Page7_Promises() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '28px 16px 20px',
+        justifyContent: 'flex-start',
+        padding: 'clamp(20px, 3.5vh, 32px) 16px clamp(24px, 4vh, 36px)',
+        gap: 'clamp(14px, 2.5vh, 24px)',
       }}
     >
       {/* Background glow */}

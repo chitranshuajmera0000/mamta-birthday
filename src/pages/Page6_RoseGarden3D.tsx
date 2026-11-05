@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GARDEN_POEM } from '../utils/constants';
 import { Sparkles, X, Heart } from 'lucide-react';
@@ -22,15 +23,18 @@ export default function Page6_RoseGarden3D() {
     <div
       style={{
         width: '100vw',
-        height: '100vh',
+        minHeight: '100dvh',
         background: 'radial-gradient(ellipse at center, #1E050D 0%, #0D0206 60%, #050102 100%)',
         position: 'relative',
-        overflow: 'hidden',
+        overflowY: 'auto',
+        overflowX: 'hidden',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '30px 20px',
+        justifyContent: 'flex-start',
+        padding: 'clamp(20px, 3.5vh, 32px) 20px clamp(28px, 4.5vh, 40px)',
+        gap: 'clamp(12px, 2.2vh, 22px)',
+        scrollbarWidth: 'none',
       }}
     >
       {/* Floating golden fireflies */}
@@ -217,25 +221,27 @@ export default function Page6_RoseGarden3D() {
       </div>
 
       {/* Luminous Romantic Poem Modal */}
-      <AnimatePresence>
-        {showPoem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowPoem(false)}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              background: 'radial-gradient(ellipse at 50% 50%, rgba(139, 0, 30, 0.48) 0%, rgba(61, 8, 18, 0.78) 45%, rgba(13, 2, 6, 0.94) 100%)',
-              zIndex: 2000,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backdropFilter: 'blur(16px)',
-              padding: 'clamp(16px, 4vh, 36px) clamp(16px, 5vw, 32px)',
-            }}
-          >
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {showPoem && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setShowPoem(false)}
+                style={{
+                  position: 'fixed',
+                  inset: 0,
+                  background: 'radial-gradient(ellipse at 50% 50%, rgba(139, 0, 30, 0.55) 0%, rgba(61, 8, 18, 0.85) 45%, rgba(13, 2, 6, 0.96) 100%)',
+                  zIndex: 9999,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backdropFilter: 'blur(16px)',
+                  padding: 'clamp(16px, 4vh, 36px) clamp(16px, 5vw, 32px)',
+                }}
+              >
             {/* Glowing Aurora Rings Behind Modal */}
             <div
               style={{
@@ -394,7 +400,9 @@ export default function Page6_RoseGarden3D() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+    )}
     </div>
   );
 }

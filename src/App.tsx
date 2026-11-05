@@ -68,6 +68,13 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [safeIndex, transitioning]);
 
+  // Reset scroll to top on every page change
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.body.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.pathname]);
+
   // Toast on route change
   useEffect(() => {
     setPageToast(PAGES[safeIndex].name);
@@ -76,7 +83,7 @@ export default function App() {
   }, [location.pathname]);
 
   return (
-    <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', width: '100vw', minHeight: '100dvh', height: '100dvh', overflow: 'hidden' }}>
       {/* Global Interactive Elements */}
       <CursorTrail />
       <RosePetals />

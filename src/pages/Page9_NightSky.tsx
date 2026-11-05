@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PERSON } from '../utils/constants';
 import { Sparkles, X, Heart } from 'lucide-react';
@@ -83,15 +84,18 @@ export default function Page9_NightSky() {
     <div
       style={{
         width: '100vw',
-        height: '100vh',
+        minHeight: '100dvh',
         background: '#040108',
         position: 'relative',
-        overflow: 'hidden',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        scrollbarWidth: 'none',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '30px 20px',
+        justifyContent: 'flex-start',
+        padding: 'clamp(20px, 3.5vh, 32px) 20px clamp(28px, 4.5vh, 40px)',
+        gap: 'clamp(14px, 2.5vh, 24px)',
       }}
     >
       {/* Background Star Canvas */}
@@ -281,25 +285,27 @@ export default function Page9_NightSky() {
       </div>
 
       {/* Official Star Certificate Modal */}
-      <AnimatePresence>
-        {showCertificate && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowCertificate(false)}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              background: 'rgba(0,0,0,0.88)',
-              zIndex: 100,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backdropFilter: 'blur(10px)',
-              padding: 20,
-            }}
-          >
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <AnimatePresence>
+            {showCertificate && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setShowCertificate(false)}
+                style={{
+                  position: 'fixed',
+                  inset: 0,
+                  background: 'rgba(0,0,0,0.88)',
+                  zIndex: 9999,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backdropFilter: 'blur(10px)',
+                  padding: 20,
+                }}
+              >
             <motion.div
               initial={{ scale: 0.8, y: 30 }}
               animate={{ scale: 1, y: 0 }}
@@ -414,7 +420,9 @@ export default function Page9_NightSky() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+    )}
     </div>
   );
 }

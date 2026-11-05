@@ -151,14 +151,19 @@ export default function Page1_OurStory() {
     <div
       style={{
         width: '100vw',
-        height: '100vh',
+        minHeight: '100dvh',
+        height: '100dvh',
         background: 'radial-gradient(ellipse at 50% 25%, #1f070b 0%, #0d0205 75%, #050103 100%)',
         position: 'relative',
-        overflow: 'hidden',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        scrollbarWidth: 'none',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
+        paddingTop: 'clamp(20px, 3.8vh, 38px)',
+        paddingBottom: 24,
       }}
     >
       {/* Ambient Bokeh Orbs in Deep Velvet Background */}

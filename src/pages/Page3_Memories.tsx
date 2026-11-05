@@ -105,7 +105,8 @@ export default function Page3_Memories() {
     <div
       style={{
         width: '100vw',
-        height: '100vh',
+        minHeight: '100dvh',
+        height: '100dvh',
         background: 'radial-gradient(ellipse at 50% 30%, #1c0509 0%, #0d0205 60%, #050103 100%)',
         position: 'relative',
         overflowY: 'auto',
@@ -114,7 +115,8 @@ export default function Page3_Memories() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
+        gap: 'clamp(10px, 1.8vh, 18px)',
         padding: 'clamp(14px, 2.5vh, 22px) clamp(14px, 3vw, 28px)',
       }}
     >
@@ -513,7 +515,8 @@ export default function Page3_Memories() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-start',
+        gap: 'clamp(10px, 1.8vh, 18px)',
                 background: 'rgba(212,175,55,0.08)',
               }}
             >
@@ -579,7 +582,8 @@ export default function Page3_Memories() {
                 padding: '18px 20px 16px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-start',
+        gap: 'clamp(10px, 1.8vh, 18px)',
               }}
             >
               {/* Header: Dr. Akshat's Private Screening */}
@@ -587,7 +591,8 @@ export default function Page3_Memories() {
                 <div
                   style={{
                     display: 'flex',
-                    justifyContent: 'space-between',
+                    justifyContent: 'flex-start',
+        gap: 'clamp(10px, 1.8vh, 18px)',
                     alignItems: 'center',
                     borderBottom: '1px solid rgba(139,58,26,0.25)',
                     paddingBottom: 6,

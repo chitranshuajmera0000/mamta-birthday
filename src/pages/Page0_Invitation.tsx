@@ -19,15 +19,18 @@ export default function Page0_Invitation() {
     <div
       style={{
         width: '100vw',
-        height: '100vh',
-        background: 'radial-gradient(ellipse at 50% 40%, #1f050b 0%, #0d0205 60%, #050102 100%)',
+        minHeight: '100dvh',
+        height: '100dvh',
+        background: 'radial-gradient(ellipse at 50% 35%, #1f050b 0%, #0d0205 60%, #050102 100%)',
         position: 'relative',
-        overflow: 'hidden',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        scrollbarWidth: 'none',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: '24px 20px',
+        justifyContent: 'flex-start',
+        padding: 'clamp(28px, 6vh, 48px) clamp(16px, 4vw, 24px) clamp(24px, 4vh, 36px)',
       }}
     >
       {/* Cinematic Vignette */}
@@ -82,19 +85,19 @@ export default function Page0_Invitation() {
           zIndex: 10,
         }}
       >
-        {/* The Bespoke Royal Monogram Crest */}
-        <div style={{ marginBottom: 20 }}>
-          <RoyalMonogram size={140} />
+        {/* The Bespoke Royal Monogram Crest - Compact & Balanced */}
+        <div style={{ marginBottom: 'clamp(10px, 2vh, 18px)' }}>
+          <RoyalMonogram size={typeof window !== 'undefined' && window.innerWidth < 480 ? 105 : 125} />
         </div>
 
         {/* Small Elegant Pre-header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-          <div style={{ width: 30, height: 1, background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.7))' }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 'clamp(4px, 1vh, 8px)' }}>
+          <div style={{ width: 24, height: 1, background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.7))' }} />
           <p
             style={{
               fontFamily: '"Cormorant Garamond", serif',
-              fontSize: 12.5,
-              letterSpacing: 6,
+              fontSize: 'clamp(10.5px, 2vw, 12px)',
+              letterSpacing: 'clamp(3px, 1vw, 5px)',
               color: 'rgba(212,175,55,0.85)',
               textTransform: 'uppercase',
               margin: 0,
@@ -103,17 +106,17 @@ export default function Page0_Invitation() {
           >
             AKSHAT PRESENTS • FOR MY FAVOURITE DOCTOR (MOTU)
           </p>
-          <div style={{ width: 30, height: 1, background: 'linear-gradient(90deg, rgba(212,175,55,0.7), transparent)' }} />
+          <div style={{ width: 24, height: 1, background: 'linear-gradient(90deg, rgba(212,175,55,0.7), transparent)' }} />
         </div>
 
         {/* Grand Headline */}
         <h1
           style={{
             fontFamily: '"Great Vibes", cursive',
-            fontSize: 'clamp(46px, 7vw, 78px)',
+            fontSize: 'clamp(38px, 6.5vw, 68px)',
             color: '#FFF',
             textShadow: '0 0 35px rgba(196,30,58,0.7), 0 0 70px rgba(212,175,55,0.3)',
-            margin: '0 0 12px',
+            margin: '0 0 clamp(4px, 1vh, 8px)',
             lineHeight: 1.15,
           }}
         >
@@ -124,9 +127,9 @@ export default function Page0_Invitation() {
         <div
           style={{
             height: 1,
-            width: '55%',
+            width: '45%',
             background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)',
-            marginBottom: 20,
+            margin: '0 auto clamp(8px, 1.4vh, 16px)',
           }}
         />
 
@@ -135,11 +138,11 @@ export default function Page0_Invitation() {
           style={{
             fontFamily: '"Playfair Display", serif',
             fontStyle: 'italic',
-            fontSize: 'clamp(15px, 2.5vw, 20px)',
+            fontSize: 'clamp(13px, 2.2vw, 16.5px)',
             color: '#F7E7CE',
-            lineHeight: 1.65,
-            maxWidth: 520,
-            margin: '0 0 34px',
+            lineHeight: 1.5,
+            maxWidth: 480,
+            margin: '0 auto clamp(14px, 2.5vh, 26px)',
             textShadow: '0 2px 10px rgba(0,0,0,0.8)',
           }}
         >
@@ -156,27 +159,27 @@ export default function Page0_Invitation() {
             border: '1.5px solid rgba(212,175,55,0.8)',
             boxShadow: '0 12px 35px rgba(196,30,58,0.55), 0 0 25px rgba(212,175,55,0.3)',
             borderRadius: 35,
-            padding: '15px 40px',
+            padding: 'clamp(11px, 1.8vh, 14px) clamp(22px, 5vw, 36px)',
             color: '#FFF',
             display: 'flex',
             alignItems: 'center',
-            gap: 12,
+            gap: 10,
             cursor: 'pointer',
           }}
         >
-          <Sparkles size={17} color="#D4AF37" />
+          <Sparkles size={16} color="#D4AF37" />
           <span
             style={{
               fontFamily: '"Cormorant Garamond", serif',
-              fontSize: 15.5,
-              letterSpacing: 3,
+              fontSize: 'clamp(13.5px, 2.2vw, 15px)',
+              letterSpacing: 2.5,
               textTransform: 'uppercase',
               fontWeight: 600,
             }}
           >
             Begin Our Story, Bhalu & Motu
           </span>
-          <Heart size={16} color="#D4AF37" fill="#D4AF37" />
+          <Heart size={15} color="#D4AF37" fill="#D4AF37" />
         </motion.button>
       </motion.div>
     </div>

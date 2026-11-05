@@ -35,7 +35,7 @@ export default function Page10_Forever() {
     <div
       style={{
         width: '100vw',
-        height: '100vh',
+        minHeight: '100dvh',
         background: '#080205',
         position: 'relative',
         overflowY: 'auto',
@@ -43,8 +43,9 @@ export default function Page10_Forever() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: '16px 12px',
+        justifyContent: 'flex-start',
+        padding: 'clamp(20px, 3.5vh, 32px) 14px clamp(28px, 4.5vh, 40px)',
+        gap: 'clamp(12px, 2vh, 20px)',
         scrollbarWidth: 'none',
       }}
     >
