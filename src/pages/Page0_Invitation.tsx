@@ -9,6 +9,11 @@ export default function Page0_Invitation() {
   const [isOpening, setIsOpening] = useState(false);
 
   const handleEnter = () => {
+    try {
+      window.dispatchEvent(new CustomEvent('start-romantic-music'));
+    } catch {
+      // ignore
+    }
     setIsOpening(true);
     setTimeout(() => {
       navigate('/story');
