@@ -10,7 +10,6 @@ import Page1_OurStory from './pages/Page1_OurStory';
 import Page2_ReasonsILoveYou from './pages/Page2_ReasonsILoveYou';
 import Page3_Memories from './pages/Page3_Memories';
 import Page4_Countdown21 from './pages/Page4_Countdown21';
-import Page5_LoveLetter from './pages/Page5_LoveLetter';
 import Page6_RoseGarden3D from './pages/Page6_RoseGarden3D';
 import Page7_Promises from './pages/Page7_Promises';
 import Page9_NightSky from './pages/Page9_NightSky';
@@ -25,7 +24,6 @@ const PAGES = [
   { path: '/reasons', name: '21 Reasons I Love You', component: Page2_ReasonsILoveYou },
   { path: '/memories', name: 'Memory Theater', component: Page3_Memories },
   { path: '/countdown', name: 'The 21 Countdown', component: Page4_Countdown21 },
-  { path: '/letter', name: 'The Love Letter', component: Page5_LoveLetter },
   { path: '/garden', name: 'The Enchanted Rose', component: Page6_RoseGarden3D },
   { path: '/promises', name: 'Promises to You', component: Page7_Promises },
   { path: '/night-sky', name: 'Your Star in the Sky', component: Page9_NightSky },

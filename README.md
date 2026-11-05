@@ -13,11 +13,10 @@ Designed & Developed by **Chitranshu Ajmera** ([@ajmera_chitranshu_9999](https:/
 - **Chapter 2: 21 Reasons I Love You**: 21 flippable royal velvet cards with personalized Hinglish messages.
 - **Chapter 3: Memory Theater**: Vintage cinema premiere screening with 35mm celluloid film strip, die-cut VIP ticket stubs, and auto-play slideshow.
 - **Chapter 4: The 21 Countdown**: Orbital milestone rings celebrating 21 years of grace.
-- **Chapter 5: The Love Letter**: Antique parchment letter with handcrafted 3D molten wax seal stamp and downward silk ribbons.
-- **Chapter 6: The Enchanted Rose**: Luminous glowing rose sanctuary with romantic poetry.
-- **Chapter 7: Promises to You**: Swaying promise cards with 3D flip physics.
-- **Chapter 9: Your Star in the Sky**: Interactive glowing constellation and registered celestial star certificate.
-- **Chapter 10: Forever With You**: The golden portal door, final love climax, confetti celebration, and Instagram developer badge.
+- **Chapter 5: The Enchanted Rose**: Luminous glowing rose sanctuary with romantic poetry.
+- **Chapter 6: Promises to You**: Swaying promise cards with 3D flip physics.
+- **Chapter 7: Your Star in the Sky**: Interactive glowing constellation and registered celestial star certificate.
+- **Chapter 8: Forever With You**: The golden portal door, final love climax, confetti celebration, and Instagram developer badge.
 
 ---
 

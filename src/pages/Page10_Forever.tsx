@@ -109,7 +109,7 @@ export default function Page10_Forever() {
                 marginBottom: 20,
               }}
             >
-              "The last page of this letter... but only the beginning of our endless journey, Motu."
+              "The final chapter of this celebration... but only the beginning of our endless journey, Motu."
             </p>
 
             {/* Future Memories Floating Frames Row */}
