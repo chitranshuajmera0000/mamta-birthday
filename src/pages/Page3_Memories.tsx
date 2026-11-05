@@ -14,7 +14,7 @@ import {
   Maximize2
 } from 'lucide-react';
 
-// Enhanced Medical Romance Vitals for each Photo Reel
+// Enhanced Medical Romance Vitals for each Photo Reel (Exclusive to Theater)
 const REEL_METADATA = [
   {
     vitals: 'VITALS: 21 CANDLES • SINUS TACHYCARDIA • 100% IN LOVE',
@@ -23,10 +23,10 @@ const REEL_METADATA = [
     reelNo: 'REEL 01 // PREMIERE',
   },
   {
-    vitals: 'VITALS: DOPAMINE SURGE • CHAI THERAPY AT SUNSET',
+    vitals: 'VITALS: ENDORPHINS: PEAK • DR. BHALU IN NATURAL HABITAT 🐼',
     seat: 'SEAT: VIP-02',
-    prescription: 'Rx: One golden hour with you, repeated every single day.',
-    reelNo: 'REEL 02 // GOLDEN HOUR',
+    prescription: 'Rx: Endless shopping sprees and forehead kisses.',
+    reelNo: 'REEL 02 // MY HUMAN',
   },
   {
     vitals: 'VITALS: CARDIAC HYPERTROPHY FROM FALLING TOO HARD',
@@ -35,28 +35,22 @@ const REEL_METADATA = [
     reelNo: 'REEL 03 // THE TWIRL',
   },
   {
-    vitals: 'VITALS: ENDORPHINS: PEAK • DR. BHALU IN NATURAL HABITAT 🐼',
-    seat: 'SEAT: VIP-04',
-    prescription: 'Rx: Endless shopping sprees and forehead kisses.',
-    reelNo: 'REEL 04 // MY HUMAN',
-  },
-  {
     vitals: 'VITALS: BLOOD PRESSURE ELEVATED • SYSTOLIC: RADIANT',
-    seat: 'SEAT: VIP-05',
+    seat: 'SEAT: VIP-04',
     prescription: 'Rx: Looking like art that museums could never afford.',
-    reelNo: 'REEL 05 // COMMANDING',
+    reelNo: 'REEL 04 // COMMANDING',
   },
   {
     vitals: 'VITALS: RESTING HEART RATE: IMPOSSIBLE AROUND YOU',
-    seat: 'SEAT: VIP-06',
+    seat: 'SEAT: VIP-05',
     prescription: 'Rx: Staring into those eyes until time forgets to move.',
-    reelNo: 'REEL 06 // THAT FACE',
+    reelNo: 'REEL 05 // THAT FACE',
   },
   {
-    vitals: 'VITALS: DIAGNOSIS: PERFECTION • NO SECOND OPINION NEEDED',
-    seat: 'SEAT: VIP-07',
-    prescription: 'Rx: Growing old together, always my Motu.',
-    reelNo: 'REEL 07 // EFFORTLESS',
+    vitals: 'VITALS: DOPAMINE SURGE • CHAI THERAPY AT SUNSET',
+    seat: 'SEAT: VIP-06',
+    prescription: 'Rx: One golden hour with you, repeated every single day.',
+    reelNo: 'REEL 06 // GOLDEN HOUR',
   },
 ];
 
